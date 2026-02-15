@@ -1,0 +1,6 @@
+# IDE folders
+.idea/
+.vs/
+
+# Build output
+out/
