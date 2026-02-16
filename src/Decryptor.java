@@ -22,10 +22,12 @@ public class Decryptor {
         KeyFactory kf = KeyFactory.getInstance("RSA");
 
         // Read private key
-        FileInputStream privKeyFile = new FileInputStream(userid + ".prv");
-        byte [] privKeyBytes = privKeyFile.readAllBytes();
-        PrivateKey privKey = kf.generatePrivate(new PKCS8EncodedKeySpec(privKeyBytes));
-        privKeyFile.close();
+        PrivateKey privKey;
+        try ( FileInputStream privKeyFile = new FileInputStream(userid + ".prv") ) {
+            byte [] privKeyBytes = privKeyFile.readAllBytes();
+            privKey = kf.generatePrivate(new PKCS8EncodedKeySpec(privKeyBytes));
+            privKeyFile.close();
+        }
 
         byte[] useridBytes = userid.getBytes();
         byte[] aeskeyBytes = Files.readAllBytes(aesKeyPath);
